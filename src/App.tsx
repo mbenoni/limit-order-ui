@@ -1,35 +1,73 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
 function App() {
-  const [count, setCount] = useState(0)
+	return (
+		<>
+			<div className="min-h-screen bg-gray-100 p-8">
+				<div className="max-w-lg mx-auto">
+					<h1 className="text-2xl text-center mb-8">Limit-ordre</h1>
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+					<form className="bg-white p-8 rounded-xl shadow-xs">
+						<p className="mb-4">Eiendel: BTC/NOK</p>
+
+						<p className='mb-4'>Nåværende markedspris: 563 890,45 NOK</p>
+
+						<div className="flex gap-4 mb-4">
+							<label className="w-full text-center">
+								<input
+									className="sr-only"
+									type="radio"
+									value="buy"
+									name="type"
+								/>
+
+								<span className="w-full inline-block py-2 border rounded-xl border-neutral-300 hover:bg-blue-500 hover:text-white hover:border-blue-500">
+									Kjøp
+								</span>
+							</label>
+
+							<label className="w-full text-center">
+								<input
+									className="sr-only"
+									type="radio"
+									value="sell"
+									name="type"
+								/>
+
+								<span className="w-full inline-block py-2 border rounded-xl border-neutral-300 hover:bg-blue-500 hover:text-white hover:border-blue-500">
+									Salg
+								</span>
+							</label>
+						</div>
+
+						<label className="block mb-4">
+							<span className="block mb-2">Limit-pris</span>
+
+							<input
+								className="w-full border border-neutral-300 px-4 py-2 rounded-xl mb-1"
+								type="text"
+							/>
+
+							<span className="text-sm">I norske kroner (NOK).</span>
+						</label>
+
+						<label className="block mb-4">
+							<span className="block mb-2">Volum</span>
+
+							<input
+								className="w-full border border-neutral-300 px-4 py-2 rounded-xl mb-1"
+								type="text"
+							/>
+
+							<span className="text-sm">I Bitcoin (BTC).</span>
+						</label>
+
+						<p className="mb-8">Total: 281 750,00 NOK</p>
+
+						<button className="w-full bg-blue-500 text-white hover:bg-blue-600 py-2 rounded-xl" type="submit">Plasser ordre</button>
+					</form>
+				</div>
+			</div>
+		</>
+	);
 }
 
-export default App
+export default App;
