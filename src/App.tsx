@@ -3,9 +3,19 @@ import { useState, type ChangeEvent } from 'react';
 function App() {
 	const [type, setType] = useState('buy');
 
+	const marketPrice = 56389045;
+
 	const handleTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setType(event.target.value);
 	};
+
+	const formatPrice = (price: number) => {
+		return (price / 100).toLocaleString('no-NO', {
+			style: 'currency',
+			currency: 'NOK',
+			currencyDisplay: 'code'
+		});
+	}
 
 	return (
 		<>
@@ -16,7 +26,8 @@ function App() {
 					<form className="bg-white p-8 rounded-xl shadow-xs">
 						<p className="mb-4">Eiendel: BTC/NOK</p>
 
-						<p className='mb-4'>Nåværende markedspris: 563 890,45 NOK</p>
+						<p className='mb-2'>Nåværende markedspris</p>
+						<p className="mb-4">{formatPrice(marketPrice)}</p>
 
 						<div className="flex gap-4 mb-4">
 							<label className="w-full text-center">
