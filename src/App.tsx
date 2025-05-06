@@ -1,12 +1,15 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
+import Error from './Error.tsx';
 
 function App() {
 	const [type, setType] = useState('buy');
 	const [limitPrice, setLimitPrice] = useState('');
 	const [volume, setVolume] = useState('');
+	const [limitPriceError, setLimitPriceError] = useState(false);
+	const [volumeError, setVolumeError] = useState(false);
 
 	const marketPrice = 56389045;
-	const formIsValid = limitPrice && volume;
+	const formIsValid = limitPrice && volume && !limitPriceError && !volumeError;
 
 	const handleTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setType(event.target.value);
@@ -29,6 +32,20 @@ function App() {
 			currencyDisplay: 'code'
 		});
 	}
+
+	const validateLimitPrice = () => {
+		const normalizedLimitPrice = limitPrice.replace(',', '.');
+		const isInvalid = Number.isNaN(Number(normalizedLimitPrice));
+
+		setLimitPriceError(isInvalid);
+	};
+
+	const validateVolume = () => {
+		const normalizedVolume = volume.replace(',', '.');
+		const isInvalid = Number.isNaN(Number(normalizedVolume));
+
+		setVolumeError(isInvalid);
+	};
 
 	const calculateTotal = () => {
 		if (!limitPrice || !volume) {
@@ -109,7 +126,10 @@ function App() {
 								type="text"
 								value={limitPrice}
 								onChange={event => setLimitPrice(event.target.value)}
+								onBlur={validateLimitPrice}
 							/>
+
+							{limitPriceError && <Error description="Limit-prisen kan kun bestå av tall." />}
 
 							<span className="text-sm">I norske kroner (NOK).</span>
 						</label>
@@ -122,7 +142,10 @@ function App() {
 								type="text"
 								value={volume}
 								onChange={event => setVolume(event.target.value)}
+								onBlur={validateVolume}
 							/>
+
+							{volumeError && <Error description="Volumet kan kun bestå av tall." />}
 
 							<span className="text-sm">I Bitcoin (BTC).</span>
 						</label>
