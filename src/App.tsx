@@ -6,6 +6,7 @@ function App() {
 	const [volume, setVolume] = useState('');
 
 	const marketPrice = 56389045;
+	const formIsValid = limitPrice && volume;
 
 	const handleTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setType(event.target.value);
@@ -131,7 +132,13 @@ function App() {
 							<span>{calculateTotal()}</span>
 						</p>
 
-						<button className="w-full bg-blue-500 text-white hover:bg-blue-600 py-2 rounded-xl" type="submit">Plasser ordre</button>
+						<button
+							className={`w-full bg-blue-500 text-white py-2 rounded-xl ${!formIsValid ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
+							type="submit"
+							disabled={!formIsValid}
+						>
+								Plasser ordre
+						</button>
 					</form>
 				</div>
 			</div>
