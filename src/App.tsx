@@ -9,7 +9,10 @@ function App() {
 	const [volumeError, setVolumeError] = useState(false);
 
 	const marketPrice = 56389045;
-	const formIsValid = limitPrice && volume && !limitPriceError && !volumeError;
+	const formIsValid = limitPrice.trim() !== '' &&
+											volume.trim() !== '' &&
+											!limitPriceError &&
+											!volumeError;
 
 	const handleTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setType(event.target.value);
