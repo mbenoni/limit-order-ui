@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 
 function App() {
 	const [type, setType] = useState('buy');
@@ -9,6 +9,16 @@ function App() {
 
 	const handleTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setType(event.target.value);
+	};
+
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		const tradeType = type === 'buy' ? 'kjøp' : 'salg';
+
+		if (confirm(`Er du sikker på at du vil plassere en limit-ordre for ${tradeType}?`)) {
+			// Proceed with placing limit order
+		}
 	};
 
 	const formatPrice = (price: number) => {
@@ -49,7 +59,10 @@ function App() {
 				<div className="max-w-lg mx-auto">
 					<h1 className="text-2xl text-center mb-8">Limit-ordre</h1>
 
-					<form className="bg-white p-8 rounded-xl shadow-xs">
+					<form
+						className="bg-white p-8 rounded-xl shadow-xs"
+						onSubmit={handleSubmit}
+					>
 						<p className="mb-4">Eiendel: BTC/NOK</p>
 
 						<p className='mb-2'>Nåværende markedspris</p>
