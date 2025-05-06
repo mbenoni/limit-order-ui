@@ -1,4 +1,12 @@
+import { useState, type ChangeEvent } from 'react';
+
 function App() {
+	const [type, setType] = useState('buy');
+
+	const handleTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setType(event.target.value);
+	};
+
 	return (
 		<>
 			<div className="min-h-screen bg-gray-100 p-8">
@@ -17,9 +25,11 @@ function App() {
 									type="radio"
 									value="buy"
 									name="type"
+									checked={type === 'buy'}
+									onChange={handleTypeChange}
 								/>
 
-								<span className="w-full inline-block py-2 border rounded-xl border-neutral-300 hover:bg-blue-500 hover:text-white hover:border-blue-500">
+								<span className={`w-full inline-block py-2 border rounded-xl hover:bg-blue-500 ${type === 'buy' ? 'bg-blue-500 text-white border-blue-500' : 'border-neutral-300 hover:bg-blue-500 hover:text-white hover:border-blue-500'}`}>
 									Kjøp
 								</span>
 							</label>
@@ -30,9 +40,11 @@ function App() {
 									type="radio"
 									value="sell"
 									name="type"
+									checked={type === 'sell'}
+									onChange={handleTypeChange}
 								/>
 
-								<span className="w-full inline-block py-2 border rounded-xl border-neutral-300 hover:bg-blue-500 hover:text-white hover:border-blue-500">
+									<span className={`w-full inline-block py-2 border rounded-xl hover:bg-blue-500 ${type === 'sell' ? 'bg-blue-500 text-white border-blue-500' : 'border-neutral-300 hover:bg-blue-500 hover:text-white hover:border-blue-500'}`}>
 									Salg
 								</span>
 							</label>
