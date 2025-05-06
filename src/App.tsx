@@ -2,6 +2,8 @@ import { useState, type ChangeEvent } from 'react';
 
 function App() {
 	const [type, setType] = useState('buy');
+	const [limitPrice, setLimitPrice] = useState('');
+	const [volume, setVolume] = useState('');
 
 	const marketPrice = 56389045;
 
@@ -15,6 +17,30 @@ function App() {
 			currency: 'NOK',
 			currencyDisplay: 'code'
 		});
+	}
+
+	const calculateTotal = () => {
+		if (!limitPrice || !volume) {
+			return '0,00 NOK';
+		}
+
+		const normalizedLimitPrice = limitPrice.replace(',', '.');
+		const normalizedVolume = volume.replace(',', '.');
+		const limitPriceAsNumber = Number(normalizedLimitPrice);
+		const volumeAsNumber = Number(normalizedVolume);
+
+		if (Number.isNaN(limitPriceAsNumber) || Number.isNaN(volumeAsNumber)) {
+			return '0,00 NOK';
+		}
+
+		const total = volumeAsNumber * limitPriceAsNumber;
+		const withCurrencyFormatting = total.toLocaleString('nb-NO', {
+			style: 'currency',
+			currency: 'NOK',
+			currencyDisplay: 'code'
+		});
+
+		return withCurrencyFormatting;
 	}
 
 	return (
@@ -67,6 +93,8 @@ function App() {
 							<input
 								className="w-full border border-neutral-300 px-4 py-2 rounded-xl mb-1"
 								type="text"
+								value={limitPrice}
+								onChange={event => setLimitPrice(event.target.value)}
 							/>
 
 							<span className="text-sm">I norske kroner (NOK).</span>
@@ -78,12 +106,17 @@ function App() {
 							<input
 								className="w-full border border-neutral-300 px-4 py-2 rounded-xl mb-1"
 								type="text"
+								value={volume}
+								onChange={event => setVolume(event.target.value)}
 							/>
 
 							<span className="text-sm">I Bitcoin (BTC).</span>
 						</label>
 
-						<p className="mb-8">Total: 281 750,00 NOK</p>
+						<p className="mb-8 flex justify-between bg-blue-50 px-6 py-4 rounded-xl">
+							<span>Total sum:</span>
+							<span>{calculateTotal()}</span>
+						</p>
 
 						<button className="w-full bg-blue-500 text-white hover:bg-blue-600 py-2 rounded-xl" type="submit">Plasser ordre</button>
 					</form>
